@@ -260,6 +260,7 @@ TOOLS = [
                                      "timeline": {"type": "string"},
                                      "camera_bed": {"type": "string"},
                                      "music": {"type": "string"},
+                                     "bed_db": {"type": "number"},
                                      "dry_run": {"type": "boolean", "default": False}},
                       "required": ["name", "shots"]}),
     Tool(name="timeline_qc",
@@ -444,6 +445,8 @@ async def call_tool(name, arguments):
         plan["timeline"] = arguments.get("timeline") or f'recipe {arguments["name"]}'
         plan["camera_bed"] = arguments.get("camera_bed")
         plan["music"] = arguments.get("music")
+        if arguments.get("bed_db") is not None:
+            plan["bed_db"] = float(arguments["bed_db"])
         normalized, warnings = planner.normalize_plan(plan)
         result = planner.execute_plan(normalized, dry_run=bool(arguments.get("dry_run")))
         if warnings:
