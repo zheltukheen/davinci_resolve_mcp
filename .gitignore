@@ -1,0 +1,20 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# DSH / node
+node_modules/
+pnpm-lock.yaml
+
+# macOS
+.DS_Store
+
+# local state and media
+*.wav
+*.mp3
+*.mp4
+*.mov
+.cache/
