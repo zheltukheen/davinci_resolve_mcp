@@ -1,6 +1,6 @@
 # Video perception + automation (MCP)
 
-Eleven tools that make agent editing cheap: numbers first, one image when a picture is really
+Twenty tools that make agent editing cheap: numbers first, one image when a picture is really
 needed, and a whole timeline assembled by a single deterministic call from a text plan.
 
 ## Perception (no images unless asked)
@@ -47,6 +47,20 @@ needed, and a whole timeline assembled by a single deterministic call from a tex
   `bed_db` overrides the default bed loudness (−29 dBFS, the phone footage ambience).
 
 Examples: `examples/plan.example.json`, `examples/recipe.example.json`.
+
+## Resolve-native actions
+
+Beyond assembling timelines, the server drives what only the app can do:
+
+| Tool | What it does |
+|---|---|
+| `captions` | Resolve's own speech-to-subtitles, then an SRT plus readability stats (needs subtitle language models installed in Resolve) |
+| `normalize_loudness` | loudness-normalizes every audio clip; reports the available modes |
+| `remove_silence` | ripple-deletes pauses with optional crossfades |
+| `smart_reframe` | SmartReframe on a video track for vertical delivery |
+| `add_markers` / `list_markers` / `clear_markers` | the review protocol: the agent marks, a human edits, the agent reads the result back |
+| `timeline_qc` | structural verdict on the timeline: gaps, black ranges, tail, audio count |
+| `qc_media` | measures a rendered file: LUFS, true peak, black spans, silence, problems |
 
 ### Recipes
 

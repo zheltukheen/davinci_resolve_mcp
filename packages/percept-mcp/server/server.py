@@ -22,6 +22,7 @@ from mcp.types import ImageContent, TextContent, Tool
 import audio_index
 import planner
 import recipes
+import resolve_actions
 import sfx_library
 
 RESOLVE_MODULES = "/Library/Application Support/Blackmagic Design/DaVinci Resolve/Developer/Scripting/Modules"
@@ -55,7 +56,7 @@ def probe_file(path):
 
 def loudness(path):
     out = subprocess.run(["ffmpeg", "-hide_banner", "-i", path, "-af", "volumedetect",
-                          "-f", "null", "-"], capture_output=True, text=True).stderr
+                          "-f", "null", "-"], capture_output=True, text=True, encoding="utf-8", errors="replace").stderr
     mean = re.search(r"mean_volume: (-?[\d.]+)", out)
     peak = re.search(r"max_volume: (-?[\d.]+)", out)
     return (float(mean.group(1)) if mean else None,
@@ -65,7 +66,7 @@ def loudness(path):
 def scene_cuts(path, threshold=0.3, limit=200):
     out = subprocess.run(["ffmpeg", "-hide_banner", "-v", "error", "-i", path,
                           "-vf", f"select='gt(scene,{threshold})',showinfo",
-                          "-f", "null", "-"], capture_output=True, text=True).stderr
+                          "-f", "null", "-"], capture_output=True, text=True, encoding="utf-8", errors="replace").stderr
     return [float(t) for t in re.findall(r"pts_time:([\d.]+)", out)][:limit]
 
 
@@ -261,6 +262,51 @@ TOOLS = [
                                      "music": {"type": "string"},
                                      "dry_run": {"type": "boolean", "default": False}},
                       "required": ["name", "shots"]}),
+    Tool(name="timeline_qc",
+         description=("Structural verdict on the open timeline: gaps, black ranges, tail, audio clip "
+                      "count, markers. Text only, no render."),
+         inputSchema={"type": "object", "properties": {}}),
+    Tool(name="qc_media",
+         description=("Measure a rendered file: duration, resolution, integrated LUFS, true peak, black "
+                      "spans, silence starts, list of problems. Text only."),
+         inputSchema={"type": "object", "properties": {"path": {"type": "string"}},
+                      "required": ["path"]}),
+    Tool(name="captions",
+         description=("Create subtitles from the timeline audio with Resolve's own engine, write an SRT, "
+                      "and report readability (too long / too fast lines)."),
+         inputSchema={"type": "object",
+                      "properties": {"language": {"type": "string", "default": "auto"},
+                                     "chars_per_line": {"type": "integer", "default": 32},
+                                     "preset": {"type": "string"},
+                                     "srt_path": {"type": "string"}}}),
+    Tool(name="normalize_loudness",
+         description="Normalize every audio clip of the timeline to a loudness target (LUFS).",
+         inputSchema={"type": "object",
+                      "properties": {"target_lufs": {"type": "number", "default": -14},
+                                     "mode": {"type": "string"}}}),
+    Tool(name="remove_silence",
+         description="Ripple-delete pauses on the first audio track, with optional crossfades.",
+         inputSchema={"type": "object",
+                      "properties": {"threshold_db": {"type": "number", "default": -30},
+                                     "minimum_frames": {"type": "integer"},
+                                     "crossfade": {"type": "boolean", "default": True}}}),
+    Tool(name="smart_reframe",
+         description="Run Resolve SmartReframe on video track 1 to reframe for vertical delivery.",
+         inputSchema={"type": "object",
+                      "properties": {"track": {"type": "string", "default": "video"},
+                                     "track_index": {"type": "integer", "default": 1}}}),
+    Tool(name="add_markers",
+         description="Place review markers on the timeline: [{frame, name, note, color, duration}].",
+         inputSchema={"type": "object",
+                      "properties": {"markers": {"type": "array", "items": {"type": "object"}}},
+                      "required": ["markers"]}),
+    Tool(name="list_markers",
+         description="List timeline markers as text, so a human review can be read back cheaply.",
+         inputSchema={"type": "object", "properties": {}}),
+    Tool(name="clear_markers",
+         description="Delete markers by color, or all of them.",
+         inputSchema={"type": "object",
+                      "properties": {"color": {"type": "string", "default": "All"}}}),
 ]
 
 
@@ -403,6 +449,49 @@ async def call_tool(name, arguments):
         if warnings:
             result["warnings"] = warnings
         return [TextContent(type="text", text=json.dumps(result, ensure_ascii=False))]
+
+    if name == "timeline_qc":
+        return [TextContent(type="text", text=json.dumps(resolve_actions.timeline_qc(),
+                                                          ensure_ascii=False))]
+
+    if name == "qc_media":
+        return [TextContent(type="text", text=json.dumps(resolve_actions.qc_media(arguments["path"]),
+                                                          ensure_ascii=False))]
+
+    if name == "captions":
+        return [TextContent(type="text", text=json.dumps(resolve_actions.captions(
+            language=arguments.get("language") or "auto",
+            chars_per_line=int(arguments.get("chars_per_line") or 32),
+            preset=arguments.get("preset"),
+            srt_path=arguments.get("srt_path")), ensure_ascii=False))]
+
+    if name == "normalize_loudness":
+        return [TextContent(type="text", text=json.dumps(resolve_actions.normalize_loudness(
+            target_lufs=float(arguments.get("target_lufs") or -14),
+            mode=arguments.get("mode")), ensure_ascii=False))]
+
+    if name == "remove_silence":
+        return [TextContent(type="text", text=json.dumps(resolve_actions.remove_silence(
+            threshold_db=float(arguments.get("threshold_db") or -30),
+            minimum_frames=arguments.get("minimum_frames"),
+            crossfade=bool(arguments.get("crossfade", True))), ensure_ascii=False))]
+
+    if name == "smart_reframe":
+        return [TextContent(type="text", text=json.dumps(resolve_actions.smart_reframe(
+            track=arguments.get("track") or "video",
+            track_index=int(arguments.get("track_index") or 1)), ensure_ascii=False))]
+
+    if name == "add_markers":
+        return [TextContent(type="text", text=json.dumps(resolve_actions.add_markers(
+            arguments.get("markers") or []), ensure_ascii=False))]
+
+    if name == "list_markers":
+        return [TextContent(type="text", text=json.dumps(resolve_actions.list_markers(),
+                                                          ensure_ascii=False))]
+
+    if name == "clear_markers":
+        return [TextContent(type="text", text=json.dumps(resolve_actions.clear_markers(
+            arguments.get("color") or "All"), ensure_ascii=False))]
 
     raise ValueError(f"unknown tool {name}")
 

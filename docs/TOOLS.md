@@ -1,6 +1,6 @@
 # Tool reference
 
-Two servers, 25 tools. `resolve` controls the app; `percept` decides and assembles.
+Two servers, 34 tools. `resolve` controls the app; `percept` decides and assembles.
 
 ## resolve (14 tools)
 
@@ -25,7 +25,7 @@ Text in, text out. Errors come back as prose (`"Error: Not connected…"`), succ
 
 Resources: `system://status`, `project://timelines`, `project://current`, `mediapool://folders`, `timeline://current`.
 
-## percept (11 tools)
+## percept (20 tools)
 
 ### Perception — text first
 
@@ -47,6 +47,20 @@ Resources: `system://status`, `project://timelines`, `project://current`, `media
 | `list_recipes` | — | recipe menu: sections, beats, purpose, SFX |
 | `apply_plan` | `plan`, `dry_run` | builds the timeline; returns length, shot and cue counts |
 | `apply_recipe` | `name`, `shots[]`, `timeline`, `camera_bed`, `music`, `dry_run` | same, with rhythm and SFX from the recipe |
+
+### Resolve-native actions — what only the app can do
+
+| Tool | Arguments | Returns |
+|---|---|---|
+| `timeline_qc` | — | structural verdict: gaps, black ranges, tail, audio clip count, markers | 
+| `qc_media` | `path` | duration, resolution, integrated LUFS, true peak, black spans, silence starts, problem list |
+| `captions` | `language`, `chars_per_line`, `preset`, `srt_path` | creates subtitles from timeline audio, writes SRT, reports too-long / too-fast lines |
+| `normalize_loudness` | `target_lufs`, `mode` | normalizes every audio clip; lists available modes |
+| `remove_silence` | `threshold_db`, `minimum_frames`, `crossfade` | ripple-deletes pauses on the first audio track |
+| `smart_reframe` | `track`, `track_index` | runs Resolve SmartReframe and polls its status |
+| `add_markers` | `markers[]` | places review markers (frame, name, note, color, duration) |
+| `list_markers` | — | reads markers back as text — the cheap side of a human review loop |
+| `clear_markers` | `color` | deletes markers by color or all |
 
 ## Sound tags
 

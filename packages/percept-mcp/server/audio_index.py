@@ -52,7 +52,7 @@ def silences(path, threshold_db=-35, min_s=0.4):
     out = subprocess.run(
         ["ffmpeg", "-hide_banner", "-i", path, "-af",
          f"silencedetect=noise={threshold_db}dB:d={min_s}", "-f", "null", "-"],
-        capture_output=True, text=True).stderr
+        capture_output=True, text=True, encoding="utf-8", errors="replace").stderr
     starts = [float(x) for x in re.findall(r"silence_start: ([\d.]+)", out)]
     ends = [float(x) for x in re.findall(r"silence_end: ([\d.]+)", out)]
     return [{"start": round(s, 2), "end": round(e, 2)} for s, e in zip(starts, ends)]
@@ -125,7 +125,7 @@ def transcribe(path, size="tiny", language=None, allow_download=False, timeout=6
         cmd = [binary, "-m", model, "-f", wav, "-oj", "-of", base, "-nt"]
         if language:
             cmd += ["-l", language]
-        run = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+        run = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=timeout)
         if run.returncode != 0:
             return {"ok": False, "reason": (run.stderr or run.stdout)[-400:]}
         data = json.load(open(base + ".json", encoding="utf-8"))
