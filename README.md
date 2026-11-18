@@ -5,8 +5,8 @@ on video frames:
 
 | Package | Tools | What it does |
 |---|---|---|
-| [`packages/resolve-mcp`](packages/resolve-mcp) | 14 | Resolve control: projects, timelines, media pool, Fusion, pages, raw Python/Lua execution |
-| [`packages/percept-mcp`](packages/percept-mcp) | 11 | Perception (text indexes, contact sheets) and deterministic assembly (`apply_plan`, `apply_recipe`) |
+| [`packages/resolve-mcp`](packages/resolve-mcp) | 14 | Resolve control in JSON: projects, timelines, media pool, Fusion, pages, raw Python/Lua execution |
+| [`packages/percept-mcp`](packages/percept-mcp) | 27 | Perception (text indexes, contact sheets), deterministic assembly (`apply_plan`, `apply_recipe`), Resolve-native actions (captions, loudness, markers, QC), transcript string-out, b-roll ranking, music tempo matching, multicam sync |
 
 Everything is local: stdio MCP servers, Resolve's own scripting API, ffmpeg/ffprobe, and a local
 sound library. No cloud services, no API keys.

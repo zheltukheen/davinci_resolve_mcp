@@ -1,10 +1,13 @@
 # Tool reference
 
-Two servers, 34 tools. `resolve` controls the app; `percept` decides and assembles.
+Two servers, 41 tools. `resolve` controls the app; `percept` decides and assembles.
 
 ## resolve (14 tools)
 
-Text in, text out. Errors come back as prose (`"Error: Not connected…"`), successes as sentences.
+JSON in, JSON out. Every result is an object: `{"ok": true, "action": ...}` on success or
+`{"ok": false, "error": "no_project"|"not_found"|"invalid_argument"|"failed"|"no_resolve",
+"message": "..."}` on failure, so a chain can branch on codes instead of parsing prose. The original
+prose server is kept as `server_legacy.py`.
 
 | Tool | Arguments | Returns |
 |---|---|---|
@@ -25,7 +28,7 @@ Text in, text out. Errors come back as prose (`"Error: Not connected…"`), succ
 
 Resources: `system://status`, `project://timelines`, `project://current`, `mediapool://folders`, `timeline://current`.
 
-## percept (20 tools)
+## percept (27 tools)
 
 ### Perception — text first
 
@@ -62,6 +65,18 @@ Resources: `system://status`, `project://timelines`, `project://current`, `media
 | `list_markers` | — | reads markers back as text — the cheap side of a human review loop |
 | `clear_markers` | `color` | deletes markers by color or all |
 
+### Transcript, b-roll, music and multicam
+
+| Tool | Arguments | Returns |
+|---|---|---|
+| `transcribe_clip` | `name`, `size`, `language`, `use_resolve` | timed segments; Resolve's engine first, whisper fallback; cached |
+| `transcript_index` | `bin_name`, `limit` | transcribes up to N clips of a bin and caches them |
+| `string_out` | `query`, `timeline`, `camera_bed`, `dry_run` | rough cut: one shot per transcript segment containing the phrase |
+| `b_roll` | `keywords`, `limit`, `min_motion` | ranked clips: transcript hits first, then luminance/motion fit (indexes on demand) |
+| `music_index` | `folder` | BPM, loudness and length per track, cached |
+| `match_music` | `bpm`, `duration_s`, `folder` | tracks ranked by tempo closeness (octave-folded) and length |
+| `create_multicam` | `clip_names`, `name`, `sync` | multicam clip synced by audio waveform |
+
 ## Sound tags
 
 `knife`, `slice`, `peel`, `sizzle`, `fry`, `ignite`, `boil`, `pour`, `whisk`, `stir`, `squish`,
@@ -80,3 +95,5 @@ tag's files, so six knife hits are not the same sample. Resolution reads
 | `~/.cache/percept/files/<hash>.json` | per-file storyboard index, keyed by path+size+mtime+step |
 | `~/.cache/percept/sfx/<frame>_<tag>_<hash>.wav` | baked cue audio with computed gain |
 | `~/.cache/percept/models/ggml-*.bin` | whisper.cpp models |
+| `~/.cache/percept/transcripts/` | per-clip transcript segments |
+| `~/.cache/percept/music/` | per-track BPM/loudness index |

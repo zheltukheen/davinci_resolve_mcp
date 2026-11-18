@@ -4,7 +4,9 @@
       config:
         serverName: resolve
         transport: stdio
-        command: /Users/zheltukheen/Documents/адб/resolve-mcp/server/.venv/bin/davinci-resolve-mcp
+        command: /Users/zheltukheen/Documents/адб/resolve-mcp/server/.venv/bin/python
+        args:
+          - /Users/zheltukheen/Documents/адб/resolve-mcp/server/json_server.py
         cwd: /Users/zheltukheen/Documents/адб/resolve-mcp/server
         startupTimeoutMs: 60000
         toolCallTimeoutMs: 120000

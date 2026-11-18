@@ -21,6 +21,7 @@ from mcp.types import ImageContent, TextContent, Tool
 
 import audio_index
 import planner
+import media_intel
 import recipes
 import resolve_actions
 import sfx_library
@@ -308,6 +309,53 @@ TOOLS = [
          description="Delete markers by color, or all of them.",
          inputSchema={"type": "object",
                       "properties": {"color": {"type": "string", "default": "All"}}}),
+    Tool(name="transcribe_clip",
+         description="Transcribe one media pool clip: Resolve's own engine first, local whisper as fallback.",
+         inputSchema={"type": "object",
+                      "properties": {"name": {"type": "string"},
+                                     "size": {"type": "string", "default": "tiny"},
+                                     "language": {"type": "string"},
+                                     "use_resolve": {"type": "boolean", "default": True}},
+                      "required": ["name"]}),
+    Tool(name="transcript_index",
+         description="Transcribe up to N clips of a bin and cache the segments, so phrase search is free later.",
+         inputSchema={"type": "object",
+                      "properties": {"bin_name": {"type": "string"},
+                                     "limit": {"type": "integer", "default": 8}}}),
+    Tool(name="string_out",
+         description=("Rough cut from the transcript: one shot per segment containing the phrase. "
+                      "dry_run returns the plan without building."),
+         inputSchema={"type": "object",
+                      "properties": {"query": {"type": "string"},
+                                     "timeline": {"type": "string", "default": "String-out"},
+                                     "camera_bed": {"type": "string"},
+                                     "dry_run": {"type": "boolean", "default": True}},
+                      "required": ["query"]}),
+    Tool(name="b_roll",
+         description="Rank clips as b-roll for keywords: transcript hits first, then feature fit.",
+         inputSchema={"type": "object",
+                      "properties": {"keywords": {"type": "string"},
+                                     "limit": {"type": "integer", "default": 8},
+                                     "min_motion": {"type": "number"}},
+                      "required": ["keywords"]}),
+    Tool(name="music_index",
+         description="Index a folder of tracks: BPM, loudness, duration (cached per file).",
+         inputSchema={"type": "object", "properties": {"folder": {"type": "string"}},
+                      "required": ["folder"]}),
+    Tool(name="match_music",
+         description="Rank indexed tracks for a beat grid: tempo closeness (octave-folded) and length.",
+         inputSchema={"type": "object",
+                      "properties": {"bpm": {"type": "number"},
+                                     "duration_s": {"type": "number"},
+                                     "folder": {"type": "string"}},
+                      "required": ["bpm", "duration_s", "folder"]}),
+    Tool(name="create_multicam",
+         description="Create a multicam clip from media pool clips, synced by audio waveform.",
+         inputSchema={"type": "object",
+                      "properties": {"clip_names": {"type": "array", "items": {"type": "string"}},
+                                     "name": {"type": "string"},
+                                     "sync": {"type": "string", "default": "waveform"}},
+                      "required": ["clip_names"]}),
 ]
 
 
@@ -495,6 +543,43 @@ async def call_tool(name, arguments):
     if name == "clear_markers":
         return [TextContent(type="text", text=json.dumps(resolve_actions.clear_markers(
             arguments.get("color") or "All"), ensure_ascii=False))]
+
+    if name == "transcribe_clip":
+        return [TextContent(type="text", text=json.dumps(media_intel.transcribe_clip(
+            arguments["name"], language=arguments.get("language"),
+            size=arguments.get("size") or "tiny",
+            use_resolve=bool(arguments.get("use_resolve", True))), ensure_ascii=False))]
+
+    if name == "transcript_index":
+        return [TextContent(type="text", text=json.dumps(media_intel.transcript_index(
+            bin_name=arguments.get("bin_name"), limit=int(arguments.get("limit") or 8)),
+            ensure_ascii=False))]
+
+    if name == "string_out":
+        dry = bool(arguments.get("dry_run", True))
+        result = media_intel.string_out(arguments["query"],
+                                        timeline=arguments.get("timeline") or "String-out",
+                                        camera_bed=arguments.get("camera_bed"))
+        return [TextContent(type="text", text=json.dumps(result, ensure_ascii=False))]
+
+    if name == "b_roll":
+        return [TextContent(type="text", text=json.dumps(media_intel.b_roll(
+            arguments["keywords"], limit=int(arguments.get("limit") or 8),
+            min_motion=arguments.get("min_motion")), ensure_ascii=False))]
+
+    if name == "music_index":
+        return [TextContent(type="text", text=json.dumps(media_intel.music_index(
+            arguments["folder"]), ensure_ascii=False))]
+
+    if name == "match_music":
+        return [TextContent(type="text", text=json.dumps(media_intel.match_music(
+            float(arguments["bpm"]), float(arguments["duration_s"]), arguments["folder"]),
+            ensure_ascii=False))]
+
+    if name == "create_multicam":
+        return [TextContent(type="text", text=json.dumps(media_intel.create_multicam(
+            arguments["clip_names"], name=arguments.get("name"),
+            sync=arguments.get("sync") or "waveform"), ensure_ascii=False))]
 
     raise ValueError(f"unknown tool {name}")
 
