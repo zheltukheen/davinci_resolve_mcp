@@ -26,8 +26,10 @@ import recipes
 import resolve_actions
 import sfx_library
 
-RESOLVE_MODULES = "/Library/Application Support/Blackmagic Design/DaVinci Resolve/Developer/Scripting/Modules"
-CACHE = os.path.expanduser("~/.cache/percept")
+import config
+
+RESOLVE_MODULES = config.resolve_modules()
+CACHE = config.CACHE_DIR
 FILE_CACHE = os.path.join(CACHE, "files")
 MAX_SHEET_FRAMES = 64
 
@@ -179,7 +181,7 @@ def format_index(data):
 
 # ---------------------------------------------------------------- resolve helpers
 def load_resolve():
-    if RESOLVE_MODULES not in sys.path:
+    if RESOLVE_MODULES and RESOLVE_MODULES not in sys.path:
         sys.path.append(RESOLVE_MODULES)
     try:
         import DaVinciResolveScript as dvr
@@ -359,9 +361,15 @@ TOOLS = [
 ]
 
 
+EXTRA_TOOL_NAMES = {"b_roll", "create_multicam"}
+
+
 @server.list_tools()
 async def list_tools():
-    return TOOLS
+    """Core tools always; b-roll and multicam only when PERCEPT_EXTRA_TOOLS is on."""
+    if config.EXTRA_TOOLS:
+        return TOOLS
+    return [tool for tool in TOOLS if tool.name not in EXTRA_TOOL_NAMES]
 
 
 @server.call_tool()

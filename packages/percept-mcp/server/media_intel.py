@@ -13,17 +13,18 @@ import sys
 import numpy as np
 
 import audio_index
+import config
 
-CACHE = os.path.expanduser("~/.cache/percept")
+CACHE = config.CACHE_DIR
 TRANSCRIPTS = os.path.join(CACHE, "transcripts")
 MUSIC = os.path.join(CACHE, "music")
-RESOLVE_MODULES = "/Library/Application Support/Blackmagic Design/DaVinci Resolve/Developer/Scripting/Modules"
+RESOLVE_MODULES = config.resolve_modules()
 SR = 16000
 
 
 # ---------------------------------------------------------------- plumbing
 def load_resolve():
-    if RESOLVE_MODULES not in sys.path:
+    if RESOLVE_MODULES and RESOLVE_MODULES not in sys.path:
         sys.path.append(RESOLVE_MODULES)
     try:
         import DaVinciResolveScript as dvr
@@ -407,6 +408,7 @@ def create_multicam(clip_names, name=None, sync="waveform"):
 
 
 if __name__ == "__main__":
-    print(json.dumps(music_index(sys.argv[1] if len(sys.argv) > 1 else
-                                 "/Users/zheltukheen/.dsh/bundles/brag/skills/brag/assets/music"),
-                     ensure_ascii=False)[:800])
+    folder = sys.argv[1] if len(sys.argv) > 1 else config.MUSIC_DIR
+    if not folder:
+        raise SystemExit("usage: media_intel.py <music folder>")
+    print(json.dumps(music_index(folder), ensure_ascii=False)[:800])

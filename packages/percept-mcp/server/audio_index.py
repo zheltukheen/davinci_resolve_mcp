@@ -75,7 +75,9 @@ def speech_runs(rows, min_rms_db=-42, min_voice=0.55, min_windows=2):
 
 
 # ---------------------------------------------------------------- ASR
-MODEL_DIR = os.path.expanduser("~/.cache/percept/models")
+import config
+
+MODEL_DIR = os.environ.get("PERCEPT_MODEL_DIR", os.path.join(config.CACHE_DIR, "models"))
 MODEL_URL = {
     "tiny": "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-tiny.bin",
     "base": "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.bin",

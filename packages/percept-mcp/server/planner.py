@@ -15,8 +15,10 @@ import numpy as np
 
 import sfx_library
 
-RESOLVE_MODULES = "/Library/Application Support/Blackmagic Design/DaVinci Resolve/Developer/Scripting/Modules"
-CACHE = os.path.expanduser("~/.cache/percept/sfx")
+import config
+
+RESOLVE_MODULES = config.resolve_modules()
+CACHE = os.path.join(config.CACHE_DIR, "sfx")
 DEFAULT_BED_DB = -29.0     # camera ambience of the user's phone footage
 CUE_PEAK_LIMIT = -4.4      # dBFS per cue, keeps the sum clean
 SR = 48000
@@ -154,9 +156,13 @@ def _gain_report(cue, path):
 
 
 # ---------------------------------------------------------------- resolve side
-def load_resolve():
-    if RESOLVE_MODULES not in sys.path:
+def _ensure_modules():
+    if RESOLVE_MODULES and RESOLVE_MODULES not in sys.path:
         sys.path.append(RESOLVE_MODULES)
+
+
+def load_resolve():
+    _ensure_modules()
     try:
         import DaVinciResolveScript as dvr
     except ImportError:

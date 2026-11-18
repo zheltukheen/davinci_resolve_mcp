@@ -8,11 +8,13 @@ import asyncio
 import os
 import sys
 
-APP_DIR = "/Users/zheltukheen/Documents/адб/resolve-mcp/server"
+# server/src/davinci_resolve_mcp/server.py -> server/
+APP_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 def main():
-    sys.path.insert(0, APP_DIR)
+    if APP_DIR not in sys.path:
+        sys.path.insert(0, APP_DIR)
     import json_server
 
     asyncio.run(json_server.main())

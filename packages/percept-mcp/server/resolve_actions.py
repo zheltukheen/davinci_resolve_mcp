@@ -11,12 +11,14 @@ import subprocess
 import sys
 import time
 
-RESOLVE_MODULES = "/Library/Application Support/Blackmagic Design/DaVinci Resolve/Developer/Scripting/Modules"
+import config
+
+RESOLVE_MODULES = config.resolve_modules()
 NO_RESOLVE = "DaVinci Resolve is not running: start it and open the project, then call this again."
 
 
 def load_resolve():
-    if RESOLVE_MODULES not in sys.path:
+    if RESOLVE_MODULES and RESOLVE_MODULES not in sys.path:
         sys.path.append(RESOLVE_MODULES)
     try:
         import DaVinciResolveScript as dvr

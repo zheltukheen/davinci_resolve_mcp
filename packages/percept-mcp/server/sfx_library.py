@@ -6,11 +6,10 @@ file plus a sensible gain offset, so no file names ever enter the context.
 """
 import csv
 import os
-import random
 
-DEFAULT_ROOT = "/Users/zheltukheen/Documents/адб/sound-library"
-LIBRARY = os.environ.get("PERCEPT_SFX_LIBRARY", os.path.join(DEFAULT_ROOT, "library"))
-CATALOG = os.environ.get("PERCEPT_SFX_CATALOG", os.path.join(DEFAULT_ROOT, "catalog.csv"))
+import config
+
+LIBRARY, CATALOG = config.sound_paths()
 
 # tag -> (preferred item names, fallback keywords, dB above the ambience bed)
 TAGS = {

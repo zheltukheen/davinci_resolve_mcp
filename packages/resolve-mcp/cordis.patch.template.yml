@@ -1,13 +1,14 @@
+# Rendered by scripts/render-patches.py: ${BUNDLE_DIR} becomes this checkout's path.
 - insert:
     - id: resolve-mcp
       name: '@deepseek-ai/dsh-mcp-client'
       config:
         serverName: resolve
         transport: stdio
-        command: /Users/zheltukheen/Documents/адб/resolve-mcp/server/.venv/bin/python
+        command: ${BUNDLE_DIR}/server/.venv/bin/python
         args:
-          - /Users/zheltukheen/Documents/адб/resolve-mcp/server/json_server.py
-        cwd: /Users/zheltukheen/Documents/адб/resolve-mcp/server
+          - ${BUNDLE_DIR}/server/json_server.py
+        cwd: ${BUNDLE_DIR}/server
         startupTimeoutMs: 60000
         toolCallTimeoutMs: 120000
         failOnStartupError: false

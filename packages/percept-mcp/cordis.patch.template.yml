@@ -1,0 +1,16 @@
+# Rendered by scripts/render-patches.py: ${BUNDLE_DIR} becomes this checkout's path.
+# Optional: add an `env:` block here to point the server at another sound library
+# (PERCEPT_SFX_LIBRARY / PERCEPT_SFX_CATALOG) or enable PERCEPT_EXTRA_TOOLS=1.
+- insert:
+    - id: percept-mcp
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: percept
+        transport: stdio
+        command: ${BUNDLE_DIR}/server/.venv/bin/python
+        args:
+          - ${BUNDLE_DIR}/server/server.py
+        cwd: ${BUNDLE_DIR}/server
+        startupTimeoutMs: 60000
+        toolCallTimeoutMs: 180000
+        failOnStartupError: false

@@ -1,22 +1,72 @@
 {
   "timeline": "Reel take 3",
   "fps": 50,
-  "beat_grid": {"bpm": 110},
-  "camera_bed": "/Users/zheltukheen/Documents/адб/tacos-reel-audio/camera.wav",
+  "beat_grid": {
+    "bpm": 110
+  },
+  "camera_bed": "/path/to/camera.wav",
   "shots": [
-    {"clip": "ZHEL0500.mp4", "src_in": 100, "beats": 2},
-    {"clip": "ZHEL0497.mp4", "src_in": 60, "beats": 1},
-    {"clip": "ZHEL0501.mp4", "src_in": 34, "beats": 3},
-    {"clip": "ZHEL0509.mp4", "src_in": 0, "beats": 5}
+    {
+      "clip": "ZHEL0500.mp4",
+      "src_in": 100,
+      "beats": 2
+    },
+    {
+      "clip": "ZHEL0497.mp4",
+      "src_in": 60,
+      "beats": 1
+    },
+    {
+      "clip": "ZHEL0501.mp4",
+      "src_in": 34,
+      "beats": 3
+    },
+    {
+      "clip": "ZHEL0509.mp4",
+      "src_in": 0,
+      "beats": 5
+    }
   ],
   "sfx": [
-    {"frame": 0, "tag": "sizzle", "dur_s": 1.2},
-    {"frame": 55, "tag": "ignite", "dur_s": 0.7},
-    {"frame": 82, "tag": "knife", "dur_s": 0.35},
-    {"frame": 96, "tag": "knife", "dur_s": 0.35},
-    {"frame": 109, "tag": "knife", "dur_s": 0.35},
-    {"frame": 164, "tag": "whoosh", "dur_s": 0.5},
-    {"frame": 169, "tag": "impact", "dur_s": 0.6},
-    {"frame": 180, "tag": "bell", "dur_s": 0.8}
+    {
+      "frame": 0,
+      "tag": "sizzle",
+      "dur_s": 1.2
+    },
+    {
+      "frame": 55,
+      "tag": "ignite",
+      "dur_s": 0.7
+    },
+    {
+      "frame": 82,
+      "tag": "knife",
+      "dur_s": 0.35
+    },
+    {
+      "frame": 96,
+      "tag": "knife",
+      "dur_s": 0.35
+    },
+    {
+      "frame": 109,
+      "tag": "knife",
+      "dur_s": 0.35
+    },
+    {
+      "frame": 164,
+      "tag": "whoosh",
+      "dur_s": 0.5
+    },
+    {
+      "frame": 169,
+      "tag": "impact",
+      "dur_s": 0.6
+    },
+    {
+      "frame": 180,
+      "tag": "bell",
+      "dur_s": 0.8
+    }
   ]
 }

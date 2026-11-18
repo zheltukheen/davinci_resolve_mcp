@@ -25,6 +25,11 @@ second server exists to invert that:
 
 A 20-shot reel becomes: one text index pass, one plan, one call, one storyboard image to verify.
 
+Everything is configurable without editing code: `PERCEPT_SFX_LIBRARY` and `PERCEPT_SFX_CATALOG`
+point at a sound library, `PERCEPT_CACHE` moves the cache, `PERCEPT_RECIPES` moves the recipe
+folder. B-roll ranking and multicam sync are opt-in extras (`PERCEPT_EXTRA_TOOLS=1`) because most
+edits do not need them.
+
 ## Quick start
 
 Requirements: macOS, DaVinci Resolve (Studio recommended; some features are Studio-only), Python
@@ -59,9 +64,15 @@ Both servers speak MCP over stdio. Any MCP client can start them:
 
 ### Install as DeepSeek Harness bundles
 
-Each package also ships a `cordis.patch.yml` and `package.json`, so it installs as a DSH bundle
-(Bundles → install a local directory). The patch mounts one `@deepseek-ai/dsh-mcp-client` row per
-server; edit `command`/`cwd` to your checkout.
+Each package ships `package.json` and a `cordis.patch.template.yml`. Render the machine-specific
+patch first, then install the directory as a DSH bundle (Bundles → install a local directory):
+
+```bash
+python3 scripts/render-patches.py packages/resolve-mcp packages/percept-mcp
+```
+
+The rendered `cordis.patch.yml` is gitignored and mounts one `@deepseek-ai/dsh-mcp-client` row per
+server with this checkout's absolute paths.
 
 ## The editing plan
 

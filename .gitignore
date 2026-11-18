@@ -18,3 +18,6 @@ pnpm-lock.yaml
 *.mp4
 *.mov
 .cache/
+
+# rendered by scripts/render-patches.py (machine-specific paths)
+packages/*/cordis.patch.yml
