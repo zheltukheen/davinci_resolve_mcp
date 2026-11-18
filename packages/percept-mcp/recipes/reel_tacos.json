@@ -1,0 +1,17 @@
+{
+  "name": "reel_tacos",
+  "title": "Reel: tacos / composed plates",
+  "description": "Heat opening, knife section, sauce and assembly, citrus garnish, hero finish. Written for plating reels where sauces are spread rather than poured.",
+  "fps": 50,
+  "bpm": 110,
+  "sections": [
+    {"id": "open", "beats": 2, "purpose": "wide shot on the heat", "sfx": [{"beat": 0, "tag": "sizzle", "dur_s": 1.2}]},
+    {"id": "flare", "beats": 1, "purpose": "flame, torch or ignition", "sfx": [{"beat": 0, "tag": "ignite", "dur_s": 0.7}]},
+    {"id": "close", "beats": 2, "purpose": "close-up of food on the grill", "sfx": [{"beat": 0, "tag": "fry", "dur_s": 0.9}, {"beat": 1, "tag": "sizzle", "dur_s": 0.6}]},
+    {"id": "prep", "beats": 2, "purpose": "sauce spread, slaw, filling", "sfx": [{"beat": 0, "tag": "squish", "dur_s": 0.8}]},
+    {"id": "cut", "beats": 3, "purpose": "knife work, one hit per half beat", "sfx": [{"beat": 0, "tag": "knife", "dur_s": 0.35}, {"beat": 0.5, "tag": "knife", "dur_s": 0.35}, {"beat": 1, "tag": "knife", "dur_s": 0.35}, {"beat": 1.5, "tag": "knife", "dur_s": 0.35}, {"beat": 2, "tag": "knife", "dur_s": 0.35}, {"beat": 2.5, "tag": "knife", "dur_s": 0.35}]},
+    {"id": "assemble", "beats": 2, "purpose": "hands placing ingredients", "sfx": [{"beat": 0, "tag": "plate", "dur_s": 0.6}, {"beat": 1, "tag": "cutlery", "dur_s": 0.5}]},
+    {"id": "garnish", "beats": 2, "purpose": "herbs, sprinkle, citrus", "sfx": [{"beat": 0, "tag": "sprinkle", "dur_s": 0.5}, {"beat": 0.5, "tag": "squeeze", "dur_s": 0.5}]},
+    {"id": "hero", "beats": 5, "purpose": "final hero shot", "sfx": [{"beat": 0, "tag": "whoosh", "dur_s": 0.5}, {"beat": 0.2, "tag": "impact", "dur_s": 0.6}, {"beat": 0.6, "tag": "bell", "dur_s": 0.8}]}
+  ]
+}

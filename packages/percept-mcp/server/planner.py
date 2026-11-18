@@ -33,20 +33,28 @@ def normalize_plan(plan):
     fps = float(plan.get("fps") or 50)
     bpm = float((plan.get("beat_grid") or {}).get("bpm") or 0)
     shots = []
-    cursor = int(plan.get("start_frame") or 0)
+    start_frame = int(plan.get("start_frame") or 0)
+    cursor = start_frame
+    frames_per_beat = fps * 60.0 / bpm if bpm else 0.0
+    beats_used = 0.0
     for index, shot in enumerate(plan.get("shots") or []):
         if "clip" not in shot:
             raise ValueError(f"shot {index} has no clip")
         if shot.get("frames"):
             frames = int(shot["frames"])
-        elif shot.get("beats") and bpm:
-            frames = beat_frames(fps, bpm, float(shot["beats"]))
+            start, end = cursor, cursor + frames
+        elif shot.get("beats") and frames_per_beat:
+            # bounds come from the cumulative beat position, so rounding cannot drift
+            start = start_frame + round(beats_used * frames_per_beat)
+            beats_used += float(shot["beats"])
+            end = start_frame + round(beats_used * frames_per_beat)
+            frames = end - start
         else:
             raise ValueError(f"shot {index} needs frames or beats+beat_grid")
         src_in = int(shot.get("src_in") or 0)
         shots.append({"clip": shot["clip"], "src_in": src_in, "frames": frames,
-                      "start": cursor, "end": cursor + frames, "slot": shot.get("slot")})
-        cursor += frames
+                      "start": start, "end": end, "slot": shot.get("slot")})
+        cursor = end
     if not shots:
         raise ValueError("plan has no shots")
 

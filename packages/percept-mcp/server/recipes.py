@@ -48,19 +48,22 @@ def expand(name, assignments):
     frames_per_beat = fps * 60.0 / bpm if bpm else 0.0
 
     shots, cues = [], []
-    cursor = 0
+    beats_cursor = 0.0
     for assignment in assignments:
         section_id = assignment.get("section")
         if section_id not in sections:
             raise ValueError(f"section {section_id} is not in recipe {name}")
         section = sections[section_id]
-        frames = int(round(section["beats"] * frames_per_beat))
+        start_beat = beats_cursor
+        beats_cursor += float(section["beats"])
+        start = int(round(start_beat * frames_per_beat))
+        end = int(round(beats_cursor * frames_per_beat))
         shots.append({"clip": assignment["clip"], "src_in": int(assignment.get("src_in") or 0),
-                      "frames": frames, "slot": section_id})
+                      "frames": end - start, "slot": section_id})
         for cue in section.get("sfx", []):
-            cues.append({"frame": cursor + int(round(float(cue["beat"]) * frames_per_beat)),
+            beat = start_beat + float(cue["beat"])
+            cues.append({"frame": int(round(beat * frames_per_beat)),
                          "tag": cue["tag"], "dur_s": cue.get("dur_s")})
-        cursor += frames
 
     return {
         "timeline": None,
