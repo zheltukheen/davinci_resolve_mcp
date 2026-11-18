@@ -62,6 +62,16 @@ Both servers speak MCP over stdio. Any MCP client can start them:
 }
 ```
 
+### Two ways to assemble
+
+- **From speech** — `transcribe_clip` / `transcript_index` / `string_out`: one shot per transcript
+  segment matching a phrase.
+- **From meaning** — `assemble`: a brief of roles (`fire, chop, sauce, hero`) resolved against a
+  shot-tags file, with rhythm and sound design coming from a recipe. This works on footage with no
+  speech at all, which is most b-roll.
+
+`b_roll` and `create_multicam` are opt-in extras (`PERCEPT_EXTRA_TOOLS=1`) rather than core tools.
+
 ### Install as DeepSeek Harness bundles
 
 Each package ships `package.json` and a `cordis.patch.template.yml`. Render the machine-specific

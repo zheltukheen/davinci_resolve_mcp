@@ -21,6 +21,7 @@ from mcp.types import ImageContent, TextContent, Tool
 
 import audio_index
 import planner
+import brief
 import media_intel
 import recipes
 import resolve_actions
@@ -340,6 +341,19 @@ TOOLS = [
                                      "limit": {"type": "integer", "default": 8},
                                      "min_motion": {"type": "number"}},
                       "required": ["keywords"]}),
+    Tool(name="assemble",
+         description=("Meaning-first assembly: a brief of roles (\"fire, chop, sauce, hero\") "
+                      "resolved against a semantic shot-tags file, then built with a recipe's "
+                      "rhythm and sound design. Works without speech. dry_run validates only."),
+         inputSchema={"type": "object",
+                      "properties": {"brief": {},
+                                     "timeline": {"type": "string"},
+                                     "tags": {"type": "string"},
+                                     "camera_bed": {"type": "string"},
+                                     "music": {"type": "string"},
+                                     "recipe": {"type": "string", "default": "reel_tacos"},
+                                     "dry_run": {"type": "boolean", "default": True}},
+                      "required": ["brief"]}),
     Tool(name="music_index",
          description="Index a folder of tracks: BPM, loudness, duration (cached per file).",
          inputSchema={"type": "object", "properties": {"folder": {"type": "string"}},
@@ -574,6 +588,14 @@ async def call_tool(name, arguments):
         return [TextContent(type="text", text=json.dumps(media_intel.b_roll(
             arguments["keywords"], limit=int(arguments.get("limit") or 8),
             min_motion=arguments.get("min_motion")), ensure_ascii=False))]
+
+    if name == "assemble":
+        return [TextContent(type="text", text=json.dumps(brief.assemble(
+            arguments["brief"], timeline=arguments.get("timeline") or "Semantic cut",
+            tags=arguments.get("tags"), camera_bed=arguments.get("camera_bed"),
+            music=arguments.get("music"),
+            dry_run=bool(arguments.get("dry_run", True)),
+            recipe=arguments.get("recipe") or "reel_tacos"), ensure_ascii=False))]
 
     if name == "music_index":
         return [TextContent(type="text", text=json.dumps(media_intel.music_index(

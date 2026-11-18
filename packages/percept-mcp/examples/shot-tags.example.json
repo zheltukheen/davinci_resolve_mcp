@@ -1,0 +1,25 @@
+{
+  "source": "tagged by eye from contact sheets; roles drive assemble()",
+  "shots": [
+    {"clip": "ZHEL0496.mp4", "src_in": 107, "roles": ["fire", "grill", "open"], "note": "shrimp on the grill, flame under the grate"},
+    {"clip": "ZHEL0497.mp4", "src_in": 180, "roles": ["fire", "torch"], "note": "torch searing the shrimp"},
+    {"clip": "ZHEL0497.mp4", "src_in": 280, "roles": ["prep", "skewer"], "note": "shrimp onto skewers in the dark"},
+    {"clip": "ZHEL0499.mp4", "src_in": 161, "roles": ["grill", "tortilla"], "note": "tortilla on the grill"},
+    {"clip": "ZHEL0499.mp4", "src_in": 854, "roles": ["grill", "close"], "note": "grilled shrimp close-up"},
+    {"clip": "ZHEL0500.mp4", "src_in": 108, "roles": ["sauce", "slaw"], "note": "slaw tossed on the tortilla"},
+    {"clip": "ZHEL0500.mp4", "src_in": 849, "roles": ["sauce", "spread"], "note": "red sauce spread with a spoon"},
+    {"clip": "ZHEL0501.mp4", "src_in": 35, "roles": ["chop", "cut"], "note": "knife cutting cucumber on a blue board"},
+    {"clip": "ZHEL0502.mp4", "src_in": 38, "roles": ["grill", "tortilla"], "note": "tortillas grilling"},
+    {"clip": "ZHEL0502.mp4", "src_in": 201, "roles": ["sauce", "spread"], "note": "white sauce poured"},
+    {"clip": "ZHEL0503.mp4", "src_in": 0, "roles": ["prep", "containers"], "note": "containers of toppings"},
+    {"clip": "ZHEL0503.mp4", "src_in": 289, "roles": ["fire", "torch", "cheese"], "note": "torch melting cheese"},
+    {"clip": "ZHEL0504.mp4", "src_in": 248, "roles": ["assemble", "fill"], "note": "filling scooped onto a tortilla"},
+    {"clip": "ZHEL0505.mp4", "src_in": 71, "roles": ["assemble", "shrimp"], "note": "grilled shrimp set on the taco"},
+    {"clip": "ZHEL0506.mp4", "src_in": 91, "roles": ["sauce", "salsa"], "note": "salsa spooned on"},
+    {"clip": "ZHEL0507.mp4", "src_in": 36, "roles": ["sauce", "salsa"], "note": "more salsa, close"},
+    {"clip": "ZHEL0507.mp4", "src_in": 172, "roles": ["garnish", "sprinkle"], "note": "toppings sprinkled"},
+    {"clip": "ZHEL0508.mp4", "src_in": 55, "roles": ["garnish", "lime"], "note": "lime pressed over the taco"},
+    {"clip": "ZHEL0508.mp4", "src_in": 109, "roles": ["garnish", "herbs"], "note": "herbs laid on top"},
+    {"clip": "ZHEL0509.mp4", "src_in": 0, "roles": ["hero", "finish"], "note": "finished tacos, hero shot"}
+  ]
+}

@@ -1,6 +1,6 @@
 # Tool reference
 
-Two servers, 41 tools. `resolve` controls the app; `percept` decides and assembles.
+Two servers, 42 tools. `resolve` controls the app; `percept` decides and assembles.
 
 ## resolve (14 tools)
 
@@ -28,7 +28,7 @@ prose server is kept as `server_legacy.py`.
 
 Resources: `system://status`, `project://timelines`, `project://current`, `mediapool://folders`, `timeline://current`.
 
-## percept (27 tools)
+## percept (28 tools: 26 core + 2 extras)
 
 ### Perception — text first
 
@@ -72,10 +72,16 @@ Resources: `system://status`, `project://timelines`, `project://current`, `media
 | `transcribe_clip` | `name`, `size`, `language`, `use_resolve` | timed segments; Resolve's engine first, whisper fallback; cached |
 | `transcript_index` | `bin_name`, `limit` | transcribes up to N clips of a bin and caches them |
 | `string_out` | `query`, `timeline`, `camera_bed`, `dry_run` | rough cut: one shot per transcript segment containing the phrase |
-| `b_roll` | `keywords`, `limit`, `min_motion` | ranked clips: transcript hits first, then luminance/motion fit (indexes on demand) |
+| `b_roll` | *(extra)* `keywords`, `limit`, `min_motion` | ranked clips: transcript hits first, then luminance/motion fit |
+| `assemble` | `brief`, `timeline`, `tags`, `camera_bed`, `music`, `recipe`, `dry_run` | meaning-first cut: roles resolved against a shot-tags file, rhythm and SFX from a recipe |
 | `music_index` | `folder` | BPM, loudness and length per track, cached |
 | `match_music` | `bpm`, `duration_s`, `folder` | tracks ranked by tempo closeness (octave-folded) and length |
-| `create_multicam` | `clip_names`, `name`, `sync` | multicam clip synced by audio waveform |
+| `create_multicam` | *(extra)* `clip_names`, `name`, `sync` | multicam clip synced by audio waveform |
+
+`assemble` closes the gap left by `string_out`: transcript search needs speech, and most b-roll has
+none. A shot-tags file (`examples/shot-tags.example.json`) gives every shot roles — `fire`, `chop`,
+`sauce`, `garnish` — and a brief of those roles becomes a timeline. Tag the footage once from a
+contact sheet; afterwards the cut costs one call.
 
 ## Sound tags
 
