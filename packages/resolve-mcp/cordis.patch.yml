@@ -1,0 +1,11 @@
+- insert:
+    - id: resolve-mcp
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: resolve
+        transport: stdio
+        command: /Users/zheltukheen/Documents/адб/resolve-mcp/server/.venv/bin/davinci-resolve-mcp
+        cwd: /Users/zheltukheen/Documents/адб/resolve-mcp/server
+        startupTimeoutMs: 60000
+        toolCallTimeoutMs: 120000
+        failOnStartupError: false

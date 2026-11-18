@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+  <g transform="translate(18 18)">
+    <circle r="13" pathLength="360" stroke="#2E9E8F" stroke-width="3.6" stroke-linecap="round" stroke-dasharray="108 12" transform="rotate(-90)"/>
+    <circle r="13" pathLength="360" stroke="#D98A2B" stroke-width="3.6" stroke-linecap="round" stroke-dasharray="108 12" transform="rotate(30)"/>
+    <circle r="13" pathLength="360" stroke="#C4576B" stroke-width="3.6" stroke-linecap="round" stroke-dasharray="108 12" transform="rotate(150)"/>
+    <circle r="4.2" fill="#8FA3A8"/>
+  </g>
+</svg>

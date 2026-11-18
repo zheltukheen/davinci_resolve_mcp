@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "DaVinci Resolve",
+    "description": "Connects a running DaVinci Resolve (Studio) to the agent over MCP and exposes 14 tools: create, load and save projects, create timelines and switch the current timeline, import media, create media pool folders, build a timeline from clips, add Fusion comps and nodes, switch Resolve pages, and run Python or Lua in Resolve. Tools appear as mcp__resolve__* and talk to Resolve through Blackmagic's local scripting API, so Resolve must stay open. Reading state is done with execute_python by assigning to result. Turn the bundle off to remove the tools; Resolve itself is never started or quit."
+  }
+}

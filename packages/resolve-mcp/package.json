@@ -1,0 +1,23 @@
+{
+  "name": "@local/dsh-resolve-mcp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "DaVinci Resolve over MCP: a local stdio bridge to the Resolve scripting API",
+  "exports": {
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "cordis.patch.yml",
+    "README.md",
+    "locale/*.json",
+    "icon.svg",
+    "server"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
