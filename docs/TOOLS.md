@@ -28,7 +28,7 @@ prose server is kept as `server_legacy.py`.
 
 Resources: `system://status`, `project://timelines`, `project://current`, `mediapool://folders`, `timeline://current`.
 
-## percept (28 tools: 26 core + 2 extras)
+## percept (28 tools: 25 core + 3 extras)
 
 ### Perception — text first
 
@@ -60,7 +60,7 @@ Resources: `system://status`, `project://timelines`, `project://current`, `media
 | `captions` | `language`, `chars_per_line`, `preset`, `srt_path` | creates subtitles from timeline audio, writes SRT, reports too-long / too-fast lines |
 | `normalize_loudness` | `target_lufs`, `mode` | normalizes every audio clip; lists available modes |
 | `remove_silence` | `threshold_db`, `minimum_frames`, `crossfade` | ripple-deletes pauses on the first audio track |
-| `smart_reframe` | `track`, `track_index` | runs Resolve SmartReframe and polls its status |
+| `smart_reframe` | *(extra)* `track`, `track_index` | runs Resolve SmartReframe and polls its status |
 | `add_markers` | `markers[]` | places review markers (frame, name, note, color, duration) |
 | `list_markers` | — | reads markers back as text — the cheap side of a human review loop |
 | `clear_markers` | `color` | deletes markers by color or all |

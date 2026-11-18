@@ -70,7 +70,9 @@ Both servers speak MCP over stdio. Any MCP client can start them:
   shot-tags file, with rhythm and sound design coming from a recipe. This works on footage with no
   speech at all, which is most b-roll.
 
-`b_roll` and `create_multicam` are opt-in extras (`PERCEPT_EXTRA_TOOLS=1`) rather than core tools.
+`b_roll`, `create_multicam` and `smart_reframe` are opt-in extras (`PERCEPT_EXTRA_TOOLS=1`) rather
+than core tools: they are occasional operations, and every extra tool costs schema context in every
+request.
 
 ### Install as DeepSeek Harness bundles
 

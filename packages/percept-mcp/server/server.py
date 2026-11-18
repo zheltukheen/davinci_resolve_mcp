@@ -375,12 +375,12 @@ TOOLS = [
 ]
 
 
-EXTRA_TOOL_NAMES = {"b_roll", "create_multicam"}
+EXTRA_TOOL_NAMES = {"b_roll", "create_multicam", "smart_reframe"}
 
 
 @server.list_tools()
 async def list_tools():
-    """Core tools always; b-roll and multicam only when PERCEPT_EXTRA_TOOLS is on."""
+    """Core tools always; b-roll, multicam and smart reframe only when PERCEPT_EXTRA_TOOLS is on."""
     if config.EXTRA_TOOLS:
         return TOOLS
     return [tool for tool in TOOLS if tool.name not in EXTRA_TOOL_NAMES]
