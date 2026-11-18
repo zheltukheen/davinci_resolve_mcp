@@ -1,0 +1,17 @@
+{
+  "name": "reel_assembly",
+  "title": "Reel: assembly / plating",
+  "description": "Softer reel for dishes being assembled: fewer heat sounds, more handling, cutlery and garnish; hero impact at the end.",
+  "fps": 50,
+  "bpm": 110,
+  "sections": [
+    {"id": "open", "beats": 2, "purpose": "empty board or bowl", "sfx": [{"beat": 0, "tag": "ambience", "dur_s": 2.0}]},
+    {"id": "prep", "beats": 2, "purpose": "first ingredient goes down", "sfx": [{"beat": 0, "tag": "plate", "dur_s": 0.6}]},
+    {"id": "sauce", "beats": 2, "purpose": "sauce, spread or squish", "sfx": [{"beat": 0, "tag": "squish", "dur_s": 0.8}]},
+    {"id": "fill", "beats": 2, "purpose": "filling dropped on", "sfx": [{"beat": 0, "tag": "squish", "dur_s": 0.7}]},
+    {"id": "close", "beats": 2, "purpose": "close-up detail", "sfx": [{"beat": 0, "tag": "cutlery", "dur_s": 0.6}]},
+    {"id": "garnish", "beats": 2, "purpose": "herbs, lime, sprinkle", "sfx": [{"beat": 0, "tag": "sprinkle", "dur_s": 0.5}, {"beat": 1, "tag": "squeeze", "dur_s": 0.6}]},
+    {"id": "cut", "beats": 3, "purpose": "knife work", "sfx": [{"beat": 0, "tag": "knife", "dur_s": 0.35}, {"beat": 0.5, "tag": "knife", "dur_s": 0.35}, {"beat": 1, "tag": "knife", "dur_s": 0.35}, {"beat": 1.5, "tag": "knife", "dur_s": 0.35}, {"beat": 2, "tag": "knife", "dur_s": 0.35}, {"beat": 2.5, "tag": "knife", "dur_s": 0.35}]},
+    {"id": "hero", "beats": 5, "purpose": "final hero shot", "sfx": [{"beat": 0, "tag": "whoosh", "dur_s": 0.5}, {"beat": 0.2, "tag": "impact", "dur_s": 0.6}, {"beat": 0.6, "tag": "bell", "dur_s": 0.8}]}
+  ]
+}

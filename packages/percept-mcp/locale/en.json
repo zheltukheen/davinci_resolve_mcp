@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Video perception and automation",
+    "description": "Cheap eyes and one-call editing for Resolve. Perception: index_media (cached text storyboard with scene cuts, loudness, luminance/colour/motion), audio_index (loudness, silences, speech runs), transcribe (local whisper.cpp), probe, contact_sheet (one image grid for 16-64 moments), timeline_report and timeline_storyboard. Automation: sfx_tags (semantic sound roles), list_recipes (beat-locked edit templates), apply_plan and apply_recipe (build a whole timeline in one deterministic call from text, with dry_run). Numbers first, images only where needed, so an edit costs a fraction of the usual token budget."
+  }
+}

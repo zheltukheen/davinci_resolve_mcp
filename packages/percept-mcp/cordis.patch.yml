@@ -1,0 +1,13 @@
+- insert:
+    - id: percept-mcp
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: percept
+        transport: stdio
+        command: /Users/zheltukheen/Documents/адб/percept-mcp/server/.venv/bin/python
+        args:
+          - /Users/zheltukheen/Documents/адб/percept-mcp/server/server.py
+        cwd: /Users/zheltukheen/Documents/адб/percept-mcp/server
+        startupTimeoutMs: 60000
+        toolCallTimeoutMs: 180000
+        failOnStartupError: false

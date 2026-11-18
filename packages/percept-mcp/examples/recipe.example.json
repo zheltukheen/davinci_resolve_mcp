@@ -1,0 +1,15 @@
+{
+  "name": "reel_frying",
+  "timeline": "Frying reel",
+  "camera_bed": "/Users/zheltukheen/Documents/адб/tacos-reel-audio/camera.wav",
+  "shots": [
+    {"section": "open", "clip": "ZHEL0500.mp4", "src_in": 100},
+    {"section": "flare", "clip": "ZHEL0497.mp4", "src_in": 60},
+    {"section": "close", "clip": "ZHEL0505.mp4", "src_in": 52},
+    {"section": "cut", "clip": "ZHEL0501.mp4", "src_in": 34},
+    {"section": "prep", "clip": "ZHEL0500.mp4", "src_in": 300},
+    {"section": "assemble", "clip": "ZHEL0506.mp4", "src_in": 83},
+    {"section": "garnish", "clip": "ZHEL0508.mp4", "src_in": 60},
+    {"section": "hero", "clip": "ZHEL0509.mp4", "src_in": 0}
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "@local/dsh-percept-mcp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Perception MCP: cheap text index of media plus on-demand contact sheets for Resolve editing",
+  "exports": {
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "cordis.patch.yml",
+    "README.md",
+    "locale/*.json",
+    "icon.svg",
+    "server",
+    "recipes",
+    "examples"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "reel_frying",
+  "title": "Reel: frying / grill",
+  "description": "Beat-locked food reel built around heat: sizzle beds, ignition hits, knife accents, hero impact. Sections are slots; the model only assigns a clip and an in-point to each.",
+  "fps": 50,
+  "bpm": 110,
+  "sections": [
+    {"id": "open", "beats": 2, "purpose": "wide opening shot of the pan", "sfx": [{"beat": 0, "tag": "sizzle", "dur_s": 1.2}]},
+    {"id": "flare", "beats": 1, "purpose": "flame or igniter", "sfx": [{"beat": 0, "tag": "ignite", "dur_s": 0.7}]},
+    {"id": "close", "beats": 2, "purpose": "close-up of food in the pan", "sfx": [{"beat": 0, "tag": "fry", "dur_s": 0.9}, {"beat": 1, "tag": "sizzle", "dur_s": 0.6}]},
+    {"id": "cut", "beats": 3, "purpose": "knife work, one hit per half beat", "sfx": [{"beat": 0, "tag": "knife", "dur_s": 0.35}, {"beat": 0.5, "tag": "knife", "dur_s": 0.35}, {"beat": 1, "tag": "knife", "dur_s": 0.35}, {"beat": 1.5, "tag": "knife", "dur_s": 0.35}, {"beat": 2, "tag": "knife", "dur_s": 0.35}, {"beat": 2.5, "tag": "knife", "dur_s": 0.35}]},
+    {"id": "prep", "beats": 2, "purpose": "sauce, pour or mix", "sfx": [{"beat": 0, "tag": "pour", "dur_s": 0.7}]},
+    {"id": "assemble", "beats": 2, "purpose": "hands placing ingredients", "sfx": [{"beat": 0, "tag": "plate", "dur_s": 0.6}]},
+    {"id": "garnish", "beats": 2, "purpose": "sprinkle, herbs, squeeze", "sfx": [{"beat": 0, "tag": "sprinkle", "dur_s": 0.5}]},
+    {"id": "hero", "beats": 5, "purpose": "final hero shot", "sfx": [{"beat": 0, "tag": "whoosh", "dur_s": 0.5}, {"beat": 0.2, "tag": "impact", "dur_s": 0.6}, {"beat": 0.6, "tag": "bell", "dur_s": 0.8}]}
+  ]
+}
